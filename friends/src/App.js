@@ -2,14 +2,45 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import Friend from './components/Friend'
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       friends: []
+      // ?? Just fine?
     };
-  }
+  };
+
+  textInput = (event) => {
+    const target= event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    })
+  };
+
+  formPost = () => {
+    axios.post("http://localhost:5000/friends", {
+      name: this.state.name,
+      age: this.state.age,
+      email: this.state.email,
+      id: this.state.friends.length + 1
+    })
+      .then(result => {
+        // reset state if positive
+      })
+      .catch(error => {
+        // display error?
+      });
+  };
+
+  friendDelete = (event, stuff) => {
+    axios.delete("http://localhost:5000/friends", {
+    })
+  };
 
   componentDidMount() {
     console.log('CDM begins.');
@@ -31,7 +62,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {this.state.friends.map(friend => {return <h1>Hi, my name is {friend.name}</h1>})}
+          {this.state.friends.map(friend => <Friend name={friend.name} id={friend.id} age={friend.age} email={friend.email} key={friend.id} delete={this.friendDelete} />)}
+          <form onSubmit={this.formPost}>
+            <label>Name: <input type="text" onChange={this.textInput} name="name" /></label>
+            <label>Age: <input type="text" onChange={this.textInput} name="age" /></label>
+            <label>E-mail: <input type="text" onChange={this.textInput} name="email" /></label>
+            <button>POST</button>
+          </form>
           <pre>this.state = {JSON.stringify(this.state, null, 2)}</pre>
         </header>
       </div>
