@@ -37,9 +37,15 @@ class App extends Component {
       });
   };
 
-  friendDelete = (event, stuff) => {
-    axios.delete("http://localhost:5000/friends", {
-    })
+  friendDelete = (id) => {
+    // const =
+    axios.delete(`http://localhost:5000/friends/${id}`)
+      .then(result => {
+        this.setState({
+          friends: result.data
+        })
+      })
+      .catch(error => {console.log("argh")});
   };
 
   componentDidMount() {
@@ -62,7 +68,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {this.state.friends.map(friend => <Friend name={friend.name} id={friend.id} age={friend.age} email={friend.email} key={friend.id} delete={this.friendDelete} />)}
+          {this.state.friends.map(friend => <Friend name={friend.name} id={friend.id} age={friend.age} email={friend.email} key={friend.id} friendDelete={this.friendDelete} />)}
           <form onSubmit={this.formPost}>
             <label>Name: <input type="text" onChange={this.textInput} name="name" /></label>
             <label>Age: <input type="text" onChange={this.textInput} name="age" /></label>
