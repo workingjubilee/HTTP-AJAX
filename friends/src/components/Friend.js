@@ -6,8 +6,8 @@ const Friend = (props) => {
     <p>My age is {props.age}</p>
     <p>My e-mail is {props.email}</p>
     <p>My ID# is {props.id}</p>
-    <button onClick={() => props.friendDelete(props.id)}>Unfriend {props.name}</button>
-    <button onClick={() => props.friendUpdate({...props})}>Update {props.name}</button>
+    <button onClick={(event) => props.friendDelete(props.id, event)}>Unfriend {props.name}</button>
+    <button onClick={(event) => props.friendUpdate({...props}, event)}>Update {props.name}</button>
   </div>);
 };
 

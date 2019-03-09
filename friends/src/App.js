@@ -27,7 +27,8 @@ class App extends Component {
     console.log(this.state);
   };
 
-  formPost = () => {
+  formPost = (event) => {
+    event.preventDefault();
     axios.post("http://localhost:5000/friends", {
       name: this.state.name,
       age: this.state.age,
@@ -42,7 +43,8 @@ class App extends Component {
       });
   };
 
-  friendDelete = (id) => {
+  friendDelete = (id, event) => {
+    event.preventDefault();
     // const =
     axios.delete(`http://localhost:5000/friends/${id}`)
       .then(result => {
@@ -53,7 +55,8 @@ class App extends Component {
       .catch(error => {console.log("argh")});
   };
 
-  friendUpdate = (stuff) => {
+  friendUpdate = (stuff, event) => {
+    event.preventDefault();
     const friendData = { name: stuff.name, age: stuff.age, email: stuff.email, id: stuff.id };
     if (this.state.name.length > 0 && this.state.name !== undefined) {
       friendData.name = this.state.name
